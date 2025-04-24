@@ -1,0 +1,48 @@
+---
+title: "date_map_data413"
+author: "Sydney Ball"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Question 1: 
+Generate a sequence of dates from January 1, 2015 to December 31, 2025, spaced by
+every two months. Extract the year, quarter, and ISO week number for each date.
+```{r}
+#Generate the dates from 2015-01-01 for every 2 months in the future
+date_seq <- seq(from = ymd("2015-01-01"), 
+                to = ymd("2025-12-31"), 
+                by = "2 months")
+
+#Extract the year, quarter, and ISO week number
+date_info <- data.frame(
+  Date = date_seq,
+  Year = year(date_seq),
+  Quarter = quarter(date_seq),
+  ISO_Week = isoweek(date_seq)
+)
+
+#Print to see the correct output
+head(date_info, 15) #table is long, so only show 15 outputs
+```
+
+# Question 2:
+Given the following dates, compute the difference in months and weeks between each consecutive pair.
+```{r}
+sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
+
+#Parse into dates
+sample_dates <- as.Date(c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05"))
+
+# Compute the difference in Months and Weeks
+diff_results <- data.frame(
+  Week_Date = time_length(diff(sample_dates), "week"),
+  Month_Date = time_length(diff(sample_dates), "month")
+  )
+
+diff_results
+```
